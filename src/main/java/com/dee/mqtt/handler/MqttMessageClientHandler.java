@@ -79,9 +79,10 @@ public class MqttMessageClientHandler implements IMessageClientHandler<MqttMessa
     @Override
     public void close() {
         try {
-            mqttClient.close();
             mqttClient.disconnect();
+            mqttClient.close();
         } catch (MqttException e) {
+            log.error("关闭Mqtt客户端失败：{}", e.getMessage());
             throw new MqttErrException(e);
         }
     }
